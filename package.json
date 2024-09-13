@@ -1,0 +1,39 @@
+{
+  "name": "plataforma-gestion-eventos",
+  "version": "1.0.0",
+  "description": "plataforma que permite a los usuarios crear, promocionar y gestionar eventos, así como registrarse para asistir y obtener información detallada sobre eventos y lugares cercanos.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhrodriguezi/plataforma-gestion-eventos.git"
+  },
+  "author": "Jhonatan Rodriguez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhrodriguezi/plataforma-gestion-eventos/issues"
+  },
+  "homepage": "https://github.com/jhrodriguezi/plataforma-gestion-eventos#readme",
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.10.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.4",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.2"
+  }
+}
