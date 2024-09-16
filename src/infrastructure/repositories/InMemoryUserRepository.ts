@@ -12,6 +12,7 @@ export class InMemoryUserRepository implements UserRepository {
     async findById(id: string): Promise<User | null> {
         return this._users.find(user => user.id === id) || null;
     }
+
     async create(user: User): Promise<User> {
         const newUser = User.fromDatabase(InMemoryUserRepository.id.toString(), user.name, 
         user.email, user.password_hash, user.created_at, user.updated_at);
@@ -19,6 +20,7 @@ export class InMemoryUserRepository implements UserRepository {
         InMemoryUserRepository.id++;
         return newUser;
     }
+    
     async update(user: User): Promise<void> {
         const index = this._users.findIndex(u => u.id === user.id);
         if(index !== -1) {

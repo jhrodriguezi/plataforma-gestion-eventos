@@ -42,3 +42,24 @@ export class User {
         return new User(id, name, email, password_hash, created_at, updated_at);
     }
 }
+
+export interface ICreateUserDTO {
+    name: string;
+    email: string;
+    password_hash: string;
+}
+
+export interface IReturnUserDTO {
+    id: string;
+    name: string;
+    email: string;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface IUpdateUserDTO {
+    id: string;
+    name: string;
+    email: string;
+    password_hash: string;
+}
