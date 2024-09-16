@@ -1,30 +1,13 @@
 import { Router } from "express";
-import { InMemoryUserRepository } from "../../infrastructure/repositories/InMemoryUserRepository";
-import { CreateUser } from "../../use-cases/user/CreateUser";
-import { UserController } from "../controllers/UserController";
-import { GetAllUsers } from "../../use-cases/user/GetAllUsers";
-import { PgUserRepository } from "../../infrastructure/repositories/PgUserRepository";
-import { pgCliet } from "../../infrastructure/database/PgDbConnection";
 import { MAX_PAGE_SIZE } from "../../config/constants";
-import { GetUserById } from "../../use-cases/user/GetUserById";
-import { UpdateUser } from "../../use-cases/user/UpdateUser";
+import { DIContainer } from "../../infrastructure/DIContainer";
 
 const router = Router()
 
-const userRepository = new PgUserRepository(pgCliet());
-const createUser = new CreateUser(userRepository);
-const getAllUsers = new GetAllUsers(userRepository);
-const updateUser = new UpdateUser(userRepository);
-const getUserById = new GetUserById(userRepository);
-const userController = new UserController(
-    createUser, 
-    getAllUsers,
-    updateUser,
-    getUserById
-); 
+const userController = DIContainer.getUserController();
 
 router.post("/create", (req, res, next) => {
-    //validaciones
+    //TODO: add validations
     userController.createUser({...req.body, password_hash: req.body.password})
     .then(user => {
         res.json(user)
@@ -34,7 +17,7 @@ router.post("/create", (req, res, next) => {
 })
 
 router.put("/:id", (req, res, next) => {
-    //validaciones
+    //TODO: add validations
     userController.updateUser({...req.body, password_hash: req.body.password, id: req.params.id})
     .then(() => {
         res.sendStatus(204)
@@ -44,7 +27,7 @@ router.put("/:id", (req, res, next) => {
 })
 
 router.get("/:id", (req, res, next) => {
-    //validaciones
+    //TODO: add validations
     userController.getUserById(req.params.id)
     .then(user => {
         res.json(user)

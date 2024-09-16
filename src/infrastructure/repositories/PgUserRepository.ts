@@ -2,13 +2,10 @@ import { Pool } from "pg";
 import { ICreateUserDTO, IReturnUserDTO, IUpdateUserDTO } from "../../domain/entities/User";
 import { UserRepository } from "../../domain/interfaces/UserRepository";
 import { queries } from "../../utils/loadSqlQueries";
+import { pgCliet } from "../database/PgDbConnection";
 
 export class PgUserRepository implements UserRepository {
-    private _db: Pool;
-
-    constructor(db: Pool) {
-        this._db = db;
-    }
+    private _db: Pool = pgCliet();
 
     async findAll(page: number, pageSize: number): Promise<IReturnUserDTO[]> {        
         const offset = (page - 1) * pageSize;
