@@ -1,0 +1,29 @@
+graph TB
+    subgraph "Cloud"
+        LB[Load Balancer]
+        ASG[Auto Scaling Group]
+        ASG --> API1[API Instance 1]
+        ASG --> API2[API Instance 2]
+        ASG --> API3[API Instance 3]
+        CDN[Content Delivery Network]
+    end
+
+    subgraph "On-Premise"
+        FW[Firewall]
+        APP[Critical Services]
+        DB_Master[Master Database]
+        DB_Slave1[Slave Database 1]
+        DB_Slave2[Slave Database 2]
+    end
+
+    Client --> CDN
+    Client --> LB
+    LB --> ASG
+    API1 --> FW
+    API2 --> FW
+    API3 --> FW
+    FW --> APP
+    FW --> DB_Master
+    DB_Master --> DB_Slave1
+    DB_Master --> DB_Slave2
+    APP --> DB_Master
