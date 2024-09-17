@@ -9,6 +9,10 @@ VALUES ($1, $2, $3) RETURNING *;
 -- name: getUserById
 SELECT * FROM APP_USER WHERE id = $1;
 
+-- Get user by email
+-- name: getUserByEmail
+SELECT * FROM APP_USER WHERE email = $1;
+
 -- Update user by id
 -- name: updateUserById
 UPDATE APP_USER SET name = $1, email = $2, password_hash = $3, updated_at = CURRENT_TIMESTAMP
@@ -17,6 +21,16 @@ WHERE id = $4;
 -- Get all users between a range
 -- name: getUsers
 SELECT * FROM APP_USER ORDER BY id LIMIT $1 OFFSET $2;
+
+-- Register a location
+-- name: registerLocation
+INSERT INTO LOCATION (name, address, latitude, longitude, city, country, postal_code) 
+VALUES ($1, $2, $3, $4, $5, $6, $7) 
+RETURNING *;
+
+-- Get location by id
+-- name: getLocationById
+SELECT * FROM LOCATION WHERE id = $1;
 
 -- Get all events for a user
 -- name: getAllEventsByUser
@@ -37,6 +51,18 @@ SELECT e.*
 FROM EVENT e
 WHERE e.location_id = $1;
 
+-- Get event by id
+-- name: getEventById
+SELECT e.* 
+FROM EVENT e
+WHERE e.id = $1;
+
+-- Insert an event
+-- name: registerEvent
+INSERT INTO EVENT (user_id, location_id, name, description, date_time, capacity, status) 
+VALUES ($1, $2, $3, $4, $5, $6, $7) 
+RETURNING *;
+
 -- Get nearby places for a location
 -- name: getNearbyPlacesByLocation
 SELECT np.*, lnp.distance 
@@ -48,8 +74,8 @@ ORDER BY lnp.distance;
 -- Update event details
 -- name: updateEvent
 UPDATE EVENT 
-SET name = $1, description = $2, date_time = $3, capacity = $4, status = $5, updated_at = CURRENT_TIMESTAMP
-WHERE id = $6;
+SET user_id = $1, location_id = $2, name = $3, description = $4, date_time = $5, capacity = $6, status = $7, updated_at = CURRENT_TIMESTAMP
+WHERE id = $8;
 
 -- Register attendance for an event
 -- name: registerAttendaceEvent
@@ -72,7 +98,4 @@ ORDER BY date_time;
 
 -- Delete an event and its associated attendances
 -- name: deleteEventAndAttendances
-BEGIN;
-DELETE FROM ATTENDANCE WHERE event_id = $1;
-DELETE FROM EVENT WHERE id = $1;
-COMMIT;
+DELETE FROM EVENT WHERE id = $1 RETURNING *;
