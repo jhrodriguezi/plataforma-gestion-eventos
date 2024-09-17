@@ -14,6 +14,6 @@ export class GetNearbyLocations {
     async execute(data: GetByIdEventDTO) {
         const event = await this._eventRepository.findById(data);
         const location = await this._locationRepository.findById(GetByIdLocationDTO.create({ id: event.location_id }))
-        return await this._mapService.getNearbyPlaces(location.latitude, location.longitude, 500, 10)
+        return await this._mapService.getNearbyPlaces(location.latitude, location.longitude, 50, 10)
     }
 }
