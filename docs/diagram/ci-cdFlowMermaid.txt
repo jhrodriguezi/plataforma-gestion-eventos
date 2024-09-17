@@ -1,0 +1,24 @@
+graph TD
+    A[Developer] -->|Commit| B(dev branch)
+    B -->|Automated Tests| C{Tests Pass?}
+    C -->|Yes| D[Merge to test branch]
+    C -->|No| E[Fix Issues]
+    E --> B
+    D -->|Automated Tests| F{Tests Pass?}
+    F -->|Yes| G[Deploy to Staging]
+    F -->|No| H[Fix Issues]
+    H --> B
+    G -->|Manual Testing| I{Tests Pass?}
+    I -->|Yes| J[Merge to main branch]
+    I -->|No| K[Fix Issues]
+    K --> B
+    J -->|Final Checks| L{All Checks Pass?}
+    L -->|Yes| M[Deploy to Production]
+    L -->|No| N[Fix Issues]
+    N --> B
+    
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
+    style J fill:#bfb,stroke:#333,stroke-width:2px
+    style G fill:#ffd700,stroke:#333,stroke-width:2px
+    style M fill:#ff7f50,stroke:#333,stroke-width:2px
